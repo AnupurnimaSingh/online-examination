@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="quiz-container" id="quiz">
+        <div class="quiz-header">
+            <h2 id="question">Question is loading...</h2>
+            <ul>
+                <li>
+                    <input type="radio" name="answer" id="a" class="answer" />
+                    <label for="a" id="a_text">Answer...</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" id="b" class="answer" />
+                    <label for="b" id="b_text">Answer...</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" id="c" class="answer" />
+                    <label for="c" id="c_text">Answer...</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" id="d" class="answer" />
+                    <label for="d" id="d_text">Answer...</label>
+                </li>
+            </ul>
+        </div>
+        <button id="submit">Submit</button>
+    </div>
+    <script>
+        const quizData = [
+            {
+                question: " What is the size of float and double in java?",
+                a: "32 and 32",
+                b: " 64 and 32",
+                c: " 64 and 64",
+                d: "32 and 64",
+                correct: "d",
+            },
+            {
+                question: "What does CSS stand for?",
+                a: "Central Style Sheets",
+                b: "Cascading Style Sheets",
+                c: "Cascading Simple Sheets",
+                d: "Cars SUVs Sailboats",
+                correct: "b",
+            },
+            {
+                question: "What does HTML stand for?",
+                a: "Hypertext Markup Language",
+                b: "Hypertext Markdown Language",
+                c: "Hyperloop Machine Language",
+                d: "Helicopters Terminals Motorboats Lamborginis",
+                correct: "a",
+            },
+            {
+                question: "What year was JavaScript launched?",
+                a: "1996",
+                b: "1995",
+                c: "1994",
+                d: "none of the above",
+                correct: "b",
+            },
+            {
+                question: "Select the valid statement to declare and initialize an array",
+                a: "int[] A=O",
+                b: "int[] A={1,2,3}",
+                c: "int[] a={1,2,3}",
+                d: "int[][] a={1,2,3}",
+                correct: "b",
+
+            },
+            {
+                question: "Arrays in JavaScript are defined by which of the following statements",
+                a: "It is an ordered list of values",
+                b: "It is an ordered list of objects",
+                c: "It is an ordered list of string",
+                d: "It is an ordered list of functions",
+                correct: "a",
+            },
+            {
+                question: "Which of the following is not javascript data types",
+                a: " Null type",
+                b: " Undefined type",
+                c: "Number type",
+                d: "All of the mentioned",
+                correct: "d",
+            },
+            {
+                question: "Which of the following object is the main entry point to all client-side JavaScript features and APIs?",
+                a: "Position",
+                b: "Window",
+                c: "Standard",
+                d: "Location",
+                correct: "a",
+
+            },
+            {
+                question: "Why JavaScript Engine is needed?",
+                a: "Both Compiling & Interpreting the JavaScript",
+                b: "Parsing the javascript",
+                c: "Interpreting the JavaScript",
+                d: " Compiling the JavaScript",
+                correct: "c",
+            },
+            {
+                question: "Which of the following is not an error in JavaScript?",
+                a: "Missing of Bracket",
+                b: "Division by zero",
+                c: "Syntax error",
+                d: "Missing of semicolons",
+                correct: "b",
+
+            },
+            {
+                question: "Among the given statements, which statement defines closures in JavaScript?",
+                a: "JavaScript is a function that is enclosed with references to its inner function scope",
+                b: "JavaScript is a function that is enclosed with references to its lexical environment",
+                c: "JavaScript is a function that is enclosed with the object to its inner function scope",
+                d: "None of the mentioned",
+                correct: "b",
+            }
+
+
+
+
+
+
+
+        ];
+        const quiz = document.getElementById("quiz");
+        const answerElements = document.querySelectorAll(".answer");
+        const questionElement = document.getElementById("question");
+        const a_text = document.getElementById("a_text");
+        const b_text = document.getElementById("b_text");
+        const c_text = document.getElementById("c_text");
+        const d_text = document.getElementById("d_text");
+        const submitButton = document.getElementById("submit");
+        let currentQuiz = 0;
+        let score = 0;
+        const deselectAnswers = () => {
+            answerElements.forEach((answer) => (answer.checked = false));
+        };
+        const getSelected = () => {
+            let answer;
+            answerElements.forEach((answerElement) => {
+                if (answerElement.checked) answer = answerElement.id;
+            });
+            return answer;
+        };
+        const loadQuiz = () => {
+            deselectAnswers();
+            const currentQuizData = quizData[currentQuiz];
+            questionElement.innerText = currentQuizData.question;
+            a_text.innerText = currentQuizData.a;
+            b_text.innerText = currentQuizData.b;
+            c_text.innerText = currentQuizData.c;
+            d_text.innerText = currentQuizData.d;
+        };
+        loadQuiz();
+        submitButton.addEventListener("click", () => {
+            const answer = getSelected();
+            if (answer) {
+                if (answer === quizData[currentQuiz].correct) score++;
+                currentQuiz++;
+                if (currentQuiz < quizData.length) loadQuiz();
+                else {
+                    quiz.innerHTML = `  
+       <h2>You answered ${score}/${quizData.length} questions correctly</h2>  
+       <button onclick="history.go(0)">Play Again</button>  
+     `
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
